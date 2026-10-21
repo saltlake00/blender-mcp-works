@@ -30,6 +30,14 @@ h2{font-size:22px;margin:44px 0 12px;font-weight:800}
 .btns{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
 .btn{display:inline-block;padding:10px 18px;border-radius:999px;border:1px solid var(--clay);text-decoration:none;font-weight:600}
 .btn.solid{background:var(--clay);color:#fff}
+button.btn{font:inherit;font-weight:600;background:transparent;color:var(--clay);cursor:pointer}
+button.btn.solid{background:var(--clay);color:#fff}
+.tabs{display:flex;gap:8px;margin:28px 0 14px;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-weight:600;background:none;border:0;border-bottom:3px solid transparent;color:var(--sub);padding:10px 18px;cursor:pointer}
+.tab.on{color:var(--clay);border-bottom-color:var(--clay)}
+.panel[hidden]{display:none}
+.copy-note{min-height:1.7em;margin:0 0 8px;font-size:14px;color:var(--sub)}
+.promptbox{max-height:420px;overflow:auto;white-space:pre-wrap;word-break:break-word;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;font:13px/1.6 ui-monospace,Consolas,monospace;margin:0}
 .video{aspect-ratio:16/9;background:var(--clay-soft);border:1px dashed var(--clay);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--sub);text-align:center;padding:16px}
 .stage{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
 .stage .tag{font-weight:800;font-size:28px;color:var(--clay);line-height:1}
@@ -49,24 +57,36 @@ footer{margin-top:56px;font-size:13px;color:var(--sub);border-top:1px solid var(
 <div class="wrap">
   <div class="crumb"><a href="../">Blender MCP 작업</a> / 거미 포탑</div>
   <h1>거미 포탑</h1>
-  <p class="lead">Claude가 Blender MCP로 Blender 5.2를 직접 조작해 만든 사족 보행 포탑입니다. 사람은 레퍼런스 이미지 2장과 단계별 프롬프트를 주고, 모델링·재질·리깅·걷기 애니메이션은 AI가 도구 호출로 한 단계씩 만들었습니다.</p>
-  <img class="cover" src="img/cover.webp" alt="사막에 선 붉은 장갑의 사족 보행 포탑">
+  <p class="lead">Claude Opus 5.5가 Blender MCP로 Blender 5.2를 직접 조작해 만든 사족 보행 포탑입니다. 사람은 레퍼런스 이미지 2장과 단계별 프롬프트를 주고, 모델링·재질·리깅·걷기 애니메이션은 Claude Opus 5.5가 도구 호출로 한 단계씩 만들었습니다. 그 뒤 같은 모델을 Unity용 게임 에셋으로 바꿨습니다(S6).</p>
+  <img class="cover" src="img/cover.webp" alt="OPUS 5.5 + BLENDER MCP, SPIDER TURRET. 사막에 선 붉은 사족 보행 포탑과 작업 단계 네 컷">
 
   <div class="nums">
-    <div class="num"><b>5</b><span>단계 세션 (S1~S5)</span></div>
+    <div class="num"><b>6</b><span>단계 세션 (S1~S6)</span></div>
     <div class="num"><b>1:57:28</b><span>녹화 합계</span></div>
-    <div class="num"><b>7:44</b><span>타임랩스 본편</span></div>
+    <div class="num"><b>1:32</b><span>타임랩스 본편</span></div>
     <div class="num"><b>234</b><span>최종 객체 수 (뼈 68)</span></div>
   </div>
 
-  <div class="btns">
-    <a class="btn solid" href="https://github.com/saltlake00/blender-mcp-works/blob/main/spider-turret/prompt.md">프롬프트 전문 보기</a>
-    <a class="btn" href="prompt.md" download>prompt.md 내려받기</a>
-    <a class="btn" href="#video">영상</a>
+  <div class="tabs" role="tablist" aria-label="영상과 프롬프트">
+    <button class="tab on" role="tab" id="tab-video" aria-selected="true" aria-controls="panel-video" data-tab="video">영상</button>
+    <button class="tab" role="tab" id="tab-prompt" aria-selected="false" aria-controls="panel-prompt" data-tab="prompt">프롬프트</button>
   </div>
 
-  <h2 id="video">영상</h2>
-  <div class="video">유튜브 업로드 후 여기에 본편을 넣습니다<br>(&lt;본편 주소&gt;)</div>
+  <div class="panel" role="tabpanel" id="panel-video" aria-labelledby="tab-video">
+    <div class="video" style="padding:0;overflow:hidden"><iframe src="https://www.youtube.com/embed/-L1CIApL3Mc" title="Modeling a Spider Turret — Claude Opus 5.5 × Blender MCP" style="width:100%;height:100%;border:0" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+    <p><a href="https://youtu.be/-L1CIApL3Mc" target="_blank" rel="noopener">유튜브에서 보기 ↗</a></p>
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-prompt" aria-labelledby="tab-prompt" hidden>
+    <p class="lead" style="margin-bottom:12px">이 작업에 쓴 프롬프트 전문입니다. 복사해서 바로 붙여 넣거나, 파일로 받을 수 있습니다.</p>
+    <div class="btns">
+      <button class="btn solid" type="button" id="copyPrompt">클립보드에 복사</button>
+      <a class="btn" href="prompt.md" download="prompt.md">prompt.md 파일 받기</a>
+      <a class="btn" href="https://github.com/saltlake00/blender-mcp-works/blob/main/spider-turret/prompt.md" target="_blank" rel="noopener">GitHub에서 보기 ↗</a>
+    </div>
+    <p class="copy-note" id="copyNote" role="status" aria-live="polite"></p>
+    <pre class="promptbox" id="promptText" tabindex="0">불러오는 중…</pre>
+  </div>
 
   <h2>단계</h2>
   <div class="stage">
@@ -94,17 +114,55 @@ footer{margin-top:56px;font-size:13px;color:var(--sub);border-top:1px solid var(
     <div><h3>리그·걷기·퇴장</h3><p>뼈 68개, 다리마다 IK. 대각 보행으로 걸어 9.5초에 화면 밖으로 나갑니다. 전면이 얼굴처럼 보인다는 의견을 받아 발광 렌즈와 V자 슬릿을 바꿨습니다.</p>
       <div class="shots"><figure><img src="img/s5-walkoff-frames.webp" alt="10초 퇴장 애니메이션 프레임 모음"><figcaption>퇴장 프레임</figcaption></figure><figure><img src="img/s5-front-before.webp" alt="수정 전 전면, 얼굴처럼 보이던 모습"><figcaption>전면 수정 전</figcaption></figure><figure><img src="img/s5-front-after.webp" alt="수정 후 전면"><figcaption>전면 수정 후</figcaption></figure></div></div>
   </div>
+  <div class="stage">
+    <div class="tag">S6<small>녹화 1:22:30 → 0:52</small></div>
+    <div><h3>게임 에셋</h3><p>녹화용 모델(124,002 삼각형)을 Unity용 28,526 삼각형으로 줄이고, 볼트·표식은 2048 텍스처 4장으로 구웠습니다. 제약으로 움직이던 리그는 키프레임으로 구워 액션 5개(Idle·Walk·Turn L/R·Fire)를 만들었고, 포탑 선회·포신 고각은 엔진이 따로 돌립니다. 걷기 1.2m/s·회전 20°/s는 실측한 관절 충돌 한계 안에서 골랐습니다.</p>
+      <div class="shots"><figure><img src="img/s6-original-vs-game.webp" alt="원본 모델과 게임용 저폴리 모델을 같은 카메라로 나란히 비교"><figcaption>원본(왼쪽)과 게임용 저폴리</figcaption></figure><figure><img src="img/s6-showcase-frames.webp" alt="게임 액션 시연 녹화에서 뽑은 프레임 모음"><figcaption>게임 액션 시연</figcaption></figure></div></div>
+  </div>
 
   <h2>사용 도구</h2>
   <ul class="tools">
-    <li>Blender 5.2 — EEVEE 뷰포트만, 오프라인 렌더 없음</li>
+    <li>Blender 5.2 — 작업 과정은 EEVEE 뷰포트 녹화, 영상 첫 걷기 장면만 EEVEE로 다시 렌더</li>
     <li>Blender MCP — Claude가 Blender를 조작하는 연결</li>
-    <li>Claude Code — 단계마다 새 세션, 끊기면 진행 파일로 이어 감</li>
+    <li>Claude Opus 5.5 (Claude Code) — 단계마다 새 세션, 끊기면 진행 파일로 이어 감</li>
     <li>VARCO 3D — 레퍼런스 이미지 2장(hero 렌더, 설계 시트)</li>
-    <li>OBS Studio·ffmpeg — 녹화, AI가 생각하며 멈춘 구간 자르기</li>
+    <li>OBS Studio·ffmpeg — 녹화, Claude가 생각하며 멈춘 구간 자르기</li>
   </ul>
 
   <footer>작성 2026-10-21 · <a href="../">Blender MCP 작업 목록</a></footer>
 </div>
+<script>
+(function(){
+  var tabs=document.querySelectorAll('.tab');
+  function show(name){
+    tabs.forEach(function(t){var on=t.dataset.tab===name;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false')});
+    document.getElementById('panel-video').hidden=name!=='video';
+    document.getElementById('panel-prompt').hidden=name!=='prompt';
+    if(name==='prompt')load();
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.tab)})});
+  var cache=null;
+  function load(){
+    if(cache!==null)return Promise.resolve(cache);
+    return fetch('prompt.md').then(function(r){if(!r.ok)throw new Error(r.status);return r.text()}).then(function(s){
+      cache=s;document.getElementById('promptText').textContent=s;return s;
+    }).catch(function(){
+      document.getElementById('promptText').textContent='프롬프트를 불러오지 못했습니다. 위의 「GitHub에서 보기」나 「prompt.md 파일 받기」를 써 주세요.';
+      throw new Error('load');
+    });
+  }
+  var note=document.getElementById('copyNote');
+  function done(msg){note.textContent=msg;setTimeout(function(){note.textContent=''},3000)}
+  document.getElementById('copyPrompt').addEventListener('click',function(){
+    load().then(function(text){
+      if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(text)}
+      var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();var ok=document.execCommand('copy');document.body.removeChild(ta);
+      if(!ok)throw new Error('copy');
+    }).then(function(){done('복사했습니다. 붙여 넣으면 됩니다.')}).catch(function(){done('복사하지 못했습니다. 아래 글을 직접 선택해 복사하거나 파일로 받아 주세요.')});
+  });
+  if(location.hash==='#prompt')show('prompt');
+})();
+</script>
 </body>
 </html>
