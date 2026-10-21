@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>거미 포탑 — Blender MCP 작업</title>
+<meta name="description" content="Claude가 Blender MCP로 Blender를 직접 조작해 만든 사족 보행 포탑. 단계별 과정, 영상, 프롬프트 공개본.">
+<meta property="og:title" content="거미 포탑 — Blender MCP 작업">
+<meta property="og:description" content="블로킹부터 10초 걷기·퇴장까지 다섯 단계 세션. 프롬프트 전문 공개.">
+<meta property="og:image" content="https://saltlake00.github.io/blender-mcp-works/preview.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF9F5;--card:#FFFFFF;--ink:#1F1E1B;--sub:#5E5A52;--line:#E6E1D6;--clay:#C6613F;--clay-soft:#F3E3DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1B1A18;--card:#24221F;--ink:#F1EDE5;--sub:#B4AEA3;--line:#3A3631;--clay:#E07A57;--clay-soft:#3A2A22}}
+:root[data-theme="dark"]{--bg:#1B1A18;--card:#24221F;--ink:#F1EDE5;--sub:#B4AEA3;--line:#3A3631;--clay:#E07A57;--clay-soft:#3A2A22}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans KR",sans-serif}
+a{color:var(--clay)}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 16px 64px}
+.crumb{font-size:14px;color:var(--sub)}
+h1{font:700 clamp(30px,6vw,46px)/1.2 "Noto Serif KR",serif;margin:8px 0 8px}
+.lead{color:var(--sub);margin:0 0 24px;max-width:720px}
+.cover{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 8px}
+.num{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.num b{display:block;font-size:24px;font-weight:800;color:var(--clay)}
+.num span{font-size:13px;color:var(--sub)}
+h2{font-size:22px;margin:44px 0 12px;font-weight:800}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.btn{display:inline-block;padding:10px 18px;border-radius:999px;border:1px solid var(--clay);text-decoration:none;font-weight:600}
+.btn.solid{background:var(--clay);color:#fff}
+.video{aspect-ratio:16/9;background:var(--clay-soft);border:1px dashed var(--clay);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--sub);text-align:center;padding:16px}
+.stage{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+.stage .tag{font-weight:800;font-size:28px;color:var(--clay);line-height:1}
+.stage .tag small{display:block;font-size:13px;color:var(--sub);font-weight:400;margin-top:6px}
+.stage h3{margin:0 0 4px;font-size:18px}
+.stage p{margin:0 0 10px;color:var(--sub)}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.shots figure{margin:0}
+.shots img{width:100%;border-radius:10px;border:1px solid var(--line);display:block;background:var(--card)}
+.shots figcaption{font-size:13px;color:var(--sub);margin-top:4px}
+ul.tools{padding-left:20px;color:var(--sub)}
+footer{margin-top:56px;font-size:13px;color:var(--sub);border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:640px){.nums{grid-template-columns:repeat(2,1fr)}.stage{grid-template-columns:1fr;gap:8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">Blender MCP 작업</a> / 거미 포탑</div>
+  <h1>거미 포탑</h1>
+  <p class="lead">Claude가 Blender MCP로 Blender 5.2를 직접 조작해 만든 사족 보행 포탑입니다. 사람은 레퍼런스 이미지 2장과 단계별 프롬프트를 주고, 모델링·재질·리깅·걷기 애니메이션은 AI가 도구 호출로 한 단계씩 만들었습니다.</p>
+  <img class="cover" src="img/cover.webp" alt="사막에 선 붉은 장갑의 사족 보행 포탑">
+
+  <div class="nums">
+    <div class="num"><b>5</b><span>단계 세션 (S1~S5)</span></div>
+    <div class="num"><b>1:57:28</b><span>녹화 합계</span></div>
+    <div class="num"><b>7:44</b><span>타임랩스 본편</span></div>
+    <div class="num"><b>234</b><span>최종 객체 수 (뼈 68)</span></div>
+  </div>
+
+  <div class="btns">
+    <a class="btn solid" href="https://github.com/saltlake00/blender-mcp-works/blob/main/spider-turret/prompt.md">프롬프트 전문 보기</a>
+    <a class="btn" href="prompt.md" download>prompt.md 내려받기</a>
+    <a class="btn" href="#video">영상</a>
+  </div>
+
+  <h2 id="video">영상</h2>
+  <div class="video">유튜브 업로드 후 여기에 본편을 넣습니다<br>(&lt;본편 주소&gt;)</div>
+
+  <h2>단계</h2>
+  <div class="stage">
+    <div class="tag">S1<small>녹화 17:10 → 1:11</small></div>
+    <div><h3>블로킹·주 장갑</h3><p>설계 시트를 픽셀로 재서 비율표를 만들고, 덩어리부터 레퍼런스 부피로 맞췄습니다. 첫 시도는 다리가 가는 막대처럼 보여 다시 했습니다.</p>
+      <div class="shots"><figure><img src="img/s1-blocking-vs-hero.webp" alt="레퍼런스 hero 렌더와 S1 블로킹 비교"><figcaption>레퍼런스(왼쪽)와 S1 블로킹</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S2<small>녹화 37:02 → 1:15</small></div>
+    <div><h3>2차 형상·기계 구조</h3><p>패널 나눔, 엉덩이 요 베어링, 엉덩이·무릎 피스톤. 관절 겹침은 실제로 회전시켜 충돌 검사로 확인했습니다.</p>
+      <div class="shots"><figure><img src="img/s2-mechanics.webp" alt="S2 기계 구조 점토 상태"><figcaption>기계 구조까지 (점토)</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S3<small>녹화 14:42 → 1:28</small></div>
+    <div><h3>디테일·케이블</h3><p>볼트는 면 인스턴스로, 제퇴기 구멍과 해치·그릴, 다리 호스와 클램프를 더했습니다. 호스 19개 모두 장갑을 관통하지 않습니다.</p>
+      <div class="shots"><figure><img src="img/s3-detail.webp" alt="S3 디테일이 들어간 점토 모델"><figcaption>디테일 단계 끝</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S4<small>녹화 8:52 → 1:44</small></div>
+    <div><h3>재질·조명·사막</h3><p>점토 → 건메탈 → 산화 적색 장갑 → 검정 인서트 → 피스톤 금속 → 마모 순서로 재질을 하나씩 공개했습니다. EEVEE 뷰포트만 씁니다.</p>
+      <div class="shots"><figure><img src="img/s4-gunmetal.webp" alt="건메탈 재질 단계"><figcaption>건메탈 단계</figcaption></figure><figure><img src="img/s4-lookdev.webp" alt="재질과 사막 환경이 들어간 완성 모습"><figcaption>재질·조명·사막</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S5<small>녹화 39:42 → 1:30</small></div>
+    <div><h3>리그·걷기·퇴장</h3><p>뼈 68개, 다리마다 IK. 대각 보행으로 걸어 9.5초에 화면 밖으로 나갑니다. 전면이 얼굴처럼 보인다는 의견을 받아 발광 렌즈와 V자 슬릿을 바꿨습니다.</p>
+      <div class="shots"><figure><img src="img/s5-walkoff-frames.webp" alt="10초 퇴장 애니메이션 프레임 모음"><figcaption>퇴장 프레임</figcaption></figure><figure><img src="img/s5-front-before.webp" alt="수정 전 전면, 얼굴처럼 보이던 모습"><figcaption>전면 수정 전</figcaption></figure><figure><img src="img/s5-front-after.webp" alt="수정 후 전면"><figcaption>전면 수정 후</figcaption></figure></div></div>
+  </div>
+
+  <h2>사용 도구</h2>
+  <ul class="tools">
+    <li>Blender 5.2 — EEVEE 뷰포트만, 오프라인 렌더 없음</li>
+    <li>Blender MCP — Claude가 Blender를 조작하는 연결</li>
+    <li>Claude Code — 단계마다 새 세션, 끊기면 진행 파일로 이어 감</li>
+    <li>VARCO 3D — 레퍼런스 이미지 2장(hero 렌더, 설계 시트)</li>
+    <li>OBS Studio·ffmpeg — 녹화, AI가 생각하며 멈춘 구간 자르기</li>
+  </ul>
+
+  <footer>작성 2026-10-21 · <a href="../">Blender MCP 작업 목록</a></footer>
+</div>
+</body>
+</html>

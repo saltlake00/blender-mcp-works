@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blender MCP 작업</title>
+<meta name="description" content="Claude가 Blender MCP로 Blender를 직접 조작해 만든 작업 모음. 작업마다 영상, 단계 기록, 프롬프트 공개본.">
+<meta property="og:title" content="Blender MCP 작업">
+<meta property="og:image" content="https://saltlake00.github.io/blender-mcp-works/preview.webp">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF9F5;--card:#FFFFFF;--ink:#1F1E1B;--sub:#5E5A52;--line:#E6E1D6;--clay:#C6613F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1B1A18;--card:#24221F;--ink:#F1EDE5;--sub:#B4AEA3;--line:#3A3631;--clay:#E07A57}}
+:root[data-theme="dark"]{--bg:#1B1A18;--card:#24221F;--ink:#F1EDE5;--sub:#B4AEA3;--line:#3A3631;--clay:#E07A57}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans KR",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:40px 16px 64px}
+h1{font:700 clamp(30px,6vw,44px)/1.2 "Noto Serif KR",serif;margin:0 0 8px}
+.lead{color:var(--sub);max-width:720px;margin:0 0 28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;display:block}
+.card img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+.card div{padding:14px 16px}
+.card b{font-size:18px}
+.card p{margin:4px 0 0;color:var(--sub);font-size:14px}
+.card .meta{color:var(--clay);font-size:13px;font-weight:600;margin-top:8px}
+footer{margin-top:48px;font-size:13px;color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Blender MCP 작업</h1>
+  <p class="lead">Claude가 Blender MCP로 Blender를 직접 조작해 만든 작업을 모읍니다. 작업마다 단계 세션 기록, 타임랩스 영상, 그때 쓴 프롬프트 전문을 둡니다.</p>
+  <div class="grid">
+    <a class="card" href="spider-turret/">
+      <img src="spider-turret/img/cover.webp" alt="거미 포탑 완성 모습">
+      <div><b>거미 포탑</b><p>사족 보행 포탑. 블로킹부터 10초 걷기·퇴장까지 다섯 단계.</p><div class="meta">2026-10-21 · 5단계 · 영상 7:44 · 프롬프트 공개</div></div>
+    </a>
+  </div>
+  <footer>새 작업이 끝나면 카드가 하나씩 늘어납니다.</footer>
+</div>
+</body>
+</html>
