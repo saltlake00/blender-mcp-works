@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SF 중곡사포 — Blender MCP 작업</title>
+<meta name="description" content="Claude가 Blender MCP로 Blender를 직접 조작해 만든 SF 중곡사포. 단계별 과정, 영상, 프롬프트 공개본.">
+<meta property="og:title" content="SF 중곡사포 — Blender MCP 작업">
+<meta property="og:description" content="블로킹부터 사격·견인 자세 전환까지 다섯 단계 세션과 게임 에셋. 프롬프트 전문 공개.">
+<meta property="og:image" content="https://saltlake00.github.io/blender-mcp-works/sf-howitzer/preview.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&family=Noto+Serif+KR:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF9F5;--card:#FFFFFF;--ink:#1F1E1B;--sub:#5E5A52;--line:#E6E1D6;--clay:#C6613F;--clay-soft:#F3E3DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1B1A18;--card:#24221F;--ink:#F1EDE5;--sub:#B4AEA3;--line:#3A3631;--clay:#E07A57;--clay-soft:#3A2A22}}
+:root[data-theme="dark"]{--bg:#1B1A18;--card:#24221F;--ink:#F1EDE5;--sub:#B4AEA3;--line:#3A3631;--clay:#E07A57;--clay-soft:#3A2A22}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans KR",sans-serif}
+a{color:var(--clay)}
+.wrap{max-width:1040px;margin:0 auto;padding:32px 16px 64px}
+.crumb{font-size:14px;color:var(--sub)}
+h1{font:700 clamp(30px,6vw,46px)/1.2 "Noto Serif KR",serif;margin:8px 0 8px}
+.lead{color:var(--sub);margin:0 0 24px;max-width:720px}
+.cover{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0 8px}
+.num{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.num b{display:block;font-size:24px;font-weight:800;color:var(--clay)}
+.num span{font-size:13px;color:var(--sub)}
+h2{font-size:22px;margin:44px 0 12px;font-weight:800}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.btn{display:inline-block;padding:10px 18px;border-radius:999px;border:1px solid var(--clay);text-decoration:none;font-weight:600}
+.btn.solid{background:var(--clay);color:#fff}
+button.btn{font:inherit;font-weight:600;background:transparent;color:var(--clay);cursor:pointer}
+button.btn.solid{background:var(--clay);color:#fff}
+.tabs{display:flex;gap:8px;margin:28px 0 14px;border-bottom:1px solid var(--line)}
+.tab{font:inherit;font-weight:600;background:none;border:0;border-bottom:3px solid transparent;color:var(--sub);padding:10px 18px;cursor:pointer}
+.tab.on{color:var(--clay);border-bottom-color:var(--clay)}
+.panel[hidden]{display:none}
+.copy-note{min-height:1.7em;margin:0 0 8px;font-size:14px;color:var(--sub)}
+.promptbox{max-height:420px;overflow:auto;white-space:pre-wrap;word-break:break-word;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;font:13px/1.6 ui-monospace,Consolas,monospace;margin:0}
+.video{aspect-ratio:16/9;background:var(--clay-soft);border:1px dashed var(--clay);border-radius:14px;display:flex;align-items:center;justify-content:center;color:var(--sub);text-align:center;padding:16px}
+.stage{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line)}
+.stage .tag{font-weight:800;font-size:28px;color:var(--clay);line-height:1}
+.stage .tag small{display:block;font-size:13px;color:var(--sub);font-weight:400;margin-top:6px}
+.stage h3{margin:0 0 4px;font-size:18px}
+.stage p{margin:0 0 10px;color:var(--sub)}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.shots figure{margin:0}
+.shots img{width:100%;border-radius:10px;border:1px solid var(--line);display:block;background:var(--card)}
+.shots figcaption{font-size:13px;color:var(--sub);margin-top:4px}
+ul.tools{padding-left:20px;color:var(--sub)}
+footer{margin-top:56px;font-size:13px;color:var(--sub);border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:640px){.nums{grid-template-columns:repeat(2,1fr)}.stage{grid-template-columns:1fr;gap:8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="../">Blender MCP 작업</a> / SF 중곡사포</div>
+  <h1>SF 중곡사포</h1>
+  <p class="lead">Claude Opus 5.5가 Blender MCP로 Blender 5.2를 직접 조작해 만든 SF 중곡사포입니다. M777처럼 끄는 곡사포 배치(벌어지는 포가 다리·스페이드·포이축·가변 주퇴)에 흰 건축풍 판재 외피를 겹쳐 입혔습니다. 사람은 레퍼런스 이미지와 단계별 프롬프트를 주고, 모델링·재질·리깅·동작은 Claude Opus 5.5가 도구 호출로 한 단계씩 만들었습니다. 그 뒤 같은 모델을 게임 에셋으로 내보냈습니다(S6).</p>
+  <img class="cover" src="img/cover.webp" alt="OPUS 5.5 + BLENDER MCP, SF 중곡사포. 흰 판재 곡사포와 작업 단계 네 컷">
+
+  <div class="nums">
+    <div class="num"><b>6</b><span>단계 세션 (S1~S6)</span></div>
+    <div class="num"><b>1:48:38</b><span>녹화 합계</span></div>
+    <div class="num"><b>1:36</b><span>타임랩스 본편</span></div>
+    <div class="num"><b>6,848</b><span>게임용 삼각형 (본 18)</span></div>
+  </div>
+
+  <div class="tabs" role="tablist" aria-label="영상과 프롬프트">
+    <button class="tab on" role="tab" id="tab-video" aria-selected="true" aria-controls="panel-video" data-tab="video">영상</button>
+    <button class="tab" role="tab" id="tab-prompt" aria-selected="false" aria-controls="panel-prompt" data-tab="prompt">프롬프트</button>
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-video" aria-labelledby="tab-video">
+    <!-- 업로드 뒤: 이 div를 거미 포탑 페이지처럼 iframe(https://www.youtube.com/embed/영상ID)으로 바꾼다 -->
+    <div class="video">영상 준비 중 (본편 1:36 · 숏츠 0:43)</div>
+  </div>
+
+  <div class="panel" role="tabpanel" id="panel-prompt" aria-labelledby="tab-prompt" hidden>
+    <p class="lead" style="margin-bottom:12px">이 작업에 쓴 프롬프트 전문입니다. 복사해서 바로 붙여 넣거나, 파일로 받을 수 있습니다.</p>
+    <div class="btns">
+      <button class="btn solid" type="button" id="copyPrompt">클립보드에 복사</button>
+      <a class="btn" href="prompt.md" download="prompt.md">prompt.md 파일 받기</a>
+      <a class="btn" href="https://github.com/saltlake00/blender-mcp-works/blob/main/sf-howitzer/prompt.md" target="_blank" rel="noopener">GitHub에서 보기 ↗</a>
+    </div>
+    <p class="copy-note" id="copyNote" role="status" aria-live="polite"></p>
+    <pre class="promptbox" id="promptText" tabindex="0">불러오는 중…</pre>
+  </div>
+
+  <h2>단계</h2>
+  <div class="stage">
+    <div class="tag">S1<small>녹화 26:50 → 0:20</small></div>
+    <div><h3>블로킹·주 장갑</h3><p>hero와 같은 시점의 클레이 블록아웃을 목표로 덩어리를 맞추고, 정사영 실루엣과 겹친 정도(IoU)·각도로 대조했습니다. 포가 다리 벌림은 50°로 고정하고, 동작에 필요한 가동 범위를 블로킹에서 먼저 쟀습니다.</p>
+      <div class="shots"><figure><img src="img/s1-blocking-vs-hero.webp" alt="레퍼런스 hero 렌더와 S1 블로킹을 같은 시점으로 나란히 비교"><figcaption>레퍼런스(왼쪽)와 S1 블로킹</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S2<small>녹화 32:53 → 0:22</small></div>
+    <div><h3>2차 형상·기계 구조</h3><p>판재 나눔, 포이축 베어링, 평형기, 주퇴 실린더, 다리·스페이드·바퀴 암·안정기 힌지. 관절마다 실제로 돌려 첫 충돌 부품을 찾는 LIMITS 표를 만들고, 막히는 곳은 형태를 고쳤습니다.</p>
+      <div class="shots"><figure><img src="img/s2-mechanics.webp" alt="S2 기계 구조까지 들어간 점토 상태"><figcaption>기계 구조까지 (점토)</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S3<small>녹화 28:08 → 0:18</small></div>
+    <div><h3>디테일·케이블</h3><p>볼트 329개(인스턴스), 칼라·유압 포트·해치·냉각 그릴, 주황 줄 7개, 호스와 클램프. 첫 세션이 중간에 끊겨, 새 세션이 진행 파일을 읽고 다른 PC에서 이어 했습니다. 케이블 때문에 고각 아래 한계가 −6°에서 −4°로 바뀌었습니다.</p>
+      <div class="shots"><figure><img src="img/s3-detail.webp" alt="S3 디테일이 들어간 점토 모델"><figcaption>디테일 단계 끝</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S4<small>녹화 11:47 → 0:11</small></div>
+    <div><h3>재질·환경·조명</h3><p>점토 → 그래파이트 기계 → 흰 세라믹 장갑 → 크롬 로드 → 고무 타이어 → 주황 줄·호박색 발광 순서로 재질을 공개했습니다. 정면에서 주퇴 실린더 아랫면 한 쌍이 눈처럼 보여 요람 배 덮개로 합쳤습니다.</p>
+      <div class="shots"><figure><img src="img/s4-front-before-after.webp" alt="정면도 레퍼런스와 수정 전후 정면 비교"><figcaption>정면 인상 수정 전후</figcaption></figure><figure><img src="img/s4-lookdev.webp" alt="재질과 콘크리트 시험장 환경이 들어간 모습"><figcaption>재질·환경·조명</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S5<small>녹화 9:00 → 0:10</small></div>
+    <div><h3>리그·동작</h3><p>본 14개, 관절 회전 제한은 LIMITS 표에서 가져왔습니다. 고각에 따라 주퇴 길이가 바뀌는 드라이버(40°까지 1.2 m, 45°부터 0.3 m), 안정기·스페이드 IK. 10초 동작은 선회·고각 → 사격·복좌 → 원위치 → 견인 자세 접기이고, 사격 중 접지 부품 미끄러짐은 0 mm입니다.</p>
+      <div class="shots"><figure><img src="img/s5-motion-frames.webp" alt="hero 레퍼런스와 동작의 첫 자세·주퇴·견인 자세 프레임"><figcaption>hero · 첫 자세 · 주퇴 · 견인 자세</figcaption></figure></div></div>
+  </div>
+  <div class="stage">
+    <div class="tag">S6<small>녹화 없음</small></div>
+    <div><h3>게임 에셋</h3><p>일반 유닛 예산(6k~12k)에 맞춰 6,848 삼각형·재질 1개로 줄이고, 볼트·표식은 1024 텍스처 4장으로 구웠습니다. 본 18개, 동작 6개(Idle·Fire_Long·Fire_Short·Stow·Deploy·TravelIdle). 선회·고각은 엔진이 따로 돌리고, 가변 주퇴는 고각으로 두 Fire 동작을 섞습니다.</p>
+      <div class="shots"><figure><img src="img/s6-original-vs-game.webp" alt="원본 모델과 게임용 저폴리 모델을 같은 카메라 두 개로 나란히 비교"><figcaption>원본(왼쪽)과 게임용 저폴리</figcaption></figure></div></div>
+  </div>
+
+  <h2>사용 도구</h2>
+  <ul class="tools">
+    <li>Blender 5.2 — EEVEE 뷰포트 녹화. 영상 첫 장면도 뷰포트 재생 그대로</li>
+    <li>Blender MCP — Claude가 Blender를 조작하는 연결</li>
+    <li>Claude Opus 5.5 (Claude Code) — 단계마다 새 세션, 끊기면 진행 파일로 이어 감</li>
+    <li>VARCO 3D·Codex 이미지 생성 — 레퍼런스(hero 렌더, 클레이, 정사영 4면, 부위 확대)</li>
+    <li>OBS Studio·ffmpeg — 녹화, 화면이 멈춘 구간과 시점만 바뀐 구간 자르기</li>
+  </ul>
+
+  <p style="font-size:14px;color:var(--sub)">출처: 작업 방식과 프롬프트 뼈대는 Muska 님(<a href="https://www.youtube.com/@Muska-2026" target="_blank" rel="noopener">@Muska-2026</a>)의 Blender MCP 영상을 바탕으로 했습니다.</p>
+
+  <footer>작성 2026-10-22 · <a href="../">Blender MCP 작업 목록</a></footer>
+</div>
+<script>
+(function(){
+  var tabs=document.querySelectorAll('.tab');
+  function show(name){
+    tabs.forEach(function(t){var on=t.dataset.tab===name;t.classList.toggle('on',on);t.setAttribute('aria-selected',on?'true':'false')});
+    document.getElementById('panel-video').hidden=name!=='video';
+    document.getElementById('panel-prompt').hidden=name!=='prompt';
+    if(name==='prompt')load();
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.tab)})});
+  var cache=null;
+  function load(){
+    if(cache!==null)return Promise.resolve(cache);
+    return fetch('prompt.md').then(function(r){if(!r.ok)throw new Error(r.status);return r.text()}).then(function(s){
+      cache=s;document.getElementById('promptText').textContent=s;return s;
+    }).catch(function(){
+      document.getElementById('promptText').textContent='프롬프트를 불러오지 못했습니다. 위의 「GitHub에서 보기」나 「prompt.md 파일 받기」를 써 주세요.';
+      throw new Error('load');
+    });
+  }
+  var note=document.getElementById('copyNote');
+  function done(msg){note.textContent=msg;setTimeout(function(){note.textContent=''},3000)}
+  document.getElementById('copyPrompt').addEventListener('click',function(){
+    load().then(function(text){
+      if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(text)}
+      var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+      document.body.appendChild(ta);ta.select();var ok=document.execCommand('copy');document.body.removeChild(ta);
+      if(!ok)throw new Error('copy');
+    }).then(function(){done('복사했습니다. 붙여 넣으면 됩니다.')}).catch(function(){done('복사하지 못했습니다. 아래 글을 직접 선택해 복사하거나 파일로 받아 주세요.')});
+  });
+  if(location.hash==='#prompt')show('prompt');
+})();
+</script>
+</body>
+</html>
